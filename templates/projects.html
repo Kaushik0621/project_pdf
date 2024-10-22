@@ -1,0 +1,24 @@
+<h2>Projects under {{ company_name }}</h2>
+
+<!-- Display the list of projects -->
+<ul id="projects-list">
+    {% if projects %}
+        {% for project in projects %}
+        <li>
+            <a href="#" class="project-link" data-project="{{ project }}" data-company="{{ company_name }}">{{ project }}</a>
+            <button class="edit-project" data-project="{{ project }}" data-company="{{ company_name }}">Edit</button>
+            <button class="delete-project" data-project="{{ project }}" data-company="{{ company_name }}">Delete</button>
+        </li>
+        {% endfor %}
+    {% else %}
+        <li>No projects available.</li>
+    {% endif %}
+</ul>
+
+<!-- Create New Project form -->
+<h3>Create New Project</h3>
+<form id="new-project-form">
+    <label>Project Name:</label>
+    <input type="text" id="project_name" name="project_name" required>
+    <input type="submit" value="Create">
+</form>

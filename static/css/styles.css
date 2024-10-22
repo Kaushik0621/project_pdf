@@ -1,0 +1,186 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    
+    
+}
+
+header {
+    background-color: #1f5da4;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+header .logo img {
+    height: 60px; /* Adjust the logo size here */
+    width: auto;
+    margin-right: 20px;
+}
+
+header h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 40px;
+}
+
+header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between the username and logout button */
+}
+header .user-info span {
+    font-size: 16px;
+}
+
+.logout-button {
+    background-color: #f44336; /* Red color for the logout button */
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+nav ul {
+    list-style-type: none;
+    background-color: #1f5da4;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+}
+
+nav li {
+    flex: 1;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 0;
+    text-decoration: none;
+}
+
+nav li a.active {  /* Active link style */
+    background-color: #144884;  /* Highlight color for the active page */
+    color: white;  /* Text color for the active page */
+    font-weight: bold;  /* Bold font for active link */
+}
+
+nav li a:hover {
+    background-color: #144884;
+    color: white;
+}
+
+
+.content {
+    padding: 20px;
+}
+
+.error {
+    color: red;
+}
+
+form label {
+    display: inline-block;
+    width: 100px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 200px;
+}
+
+form input[type="submit"] {
+    margin-top: 10px;
+}
+.options-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px; /* Space between the two options */
+    margin-top: 20px;
+}
+
+.option {
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effect for hover */
+}
+
+.option a {
+    text-decoration: none;
+    color: black; /* Default text color */
+}
+
+.option img {
+    width: 250px; /* Image width */
+    height: 250px; /* Image height */
+    border-radius: 15px; /* Rounded corners for the image */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover */
+}
+
+.option img:hover {
+    transform: scale(1.1); /* Slight zoom-in on hover */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+}
+
+.option p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.option:hover {
+    transform: scale(1.05); /* Slight zoom on hover for the entire block (image + text) */
+}
+
+.option a:hover p {
+    color: #007bff; /* Change text color on hover */
+    font-weight: bold; /* Make text bold on hover */
+}
+
+.option:hover img {
+    transform: scale(1.1); /* Zoom the image slightly when hovered over the entire option */
+}
+
+/* Custom CSS for the Projects Page */
+#main-container {
+    display: flex;
+    height: 100vh;
+    padding: 20px;
+    gap: 20px;
+    height: calc(100vh - 80px);
+}
+
+#left-section {
+    width: 66.66%;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* For elevation effect */
+    border-radius: 10px;
+    height: 100%;
+    
+}
+
+#right-section {
+    width: 33.33%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    
+}

@@ -1,0 +1,83 @@
+<h2>Project: {{ project_name }}</h2>
+
+{% if data %}
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Line Item Number</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Area</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page_name, line_items in data.items() %}
+                {% for item in line_items %}
+                <tr>
+                    <td>{{ item.line_item }}</td>
+                    <td>{{ item.coordinates.width }}</td>
+                    <td>{{ item.coordinates.height }}</td>
+                    <td>{{ item.area }}</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Total Area: {{ total_area }}</h3>
+{% else %}
+    <p>No data available for this project.</p>
+{% endif %}
+
+<!-- "Back to Projects" Button -->
+<button id="back-to-projects" data-company="{{ company_name }}">Back to Projects</button>
+
+<script>
+    document.getElementById('back-to-projects').addEventListener('click', function() {
+        const companyName = this.getAttribute('data-company');
+        loadCompanyData(companyName);
+    });
+
+    function loadCompanyData(companyName) {
+        document.getElementById('company-name').textContent = companyName;
+
+        fetch('{{ url_for("get_company_data") }}?company_name=' + encodeURIComponent(companyName))
+        .then(response => response.text())
+        .then(html => {
+            const projectsDiv = document.getElementById('company-projects');
+            projectsDiv.innerHTML = html;
+            attachProjectEventListeners();  // Re-attach listeners to the projects in this company
+            document.getElementById('left-section').innerHTML = '';  // Clear project details
+        })
+        .catch(error => {
+            console.error('Error fetching company data:', error);
+        });
+    }
+
+    function attachProjectEventListeners() {
+        const projectLinks = document.querySelectorAll('.project-link');
+        projectLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const projectName = this.getAttribute('data-project');
+                const companyName = this.getAttribute('data-company');
+                loadProjectData(companyName, projectName);
+            });
+        });
+    }
+
+    function loadProjectData(companyName, projectName) {
+        fetch('{{ url_for("get_project_data") }}?company_name=' + encodeURIComponent(companyName) + '&project_name=' + encodeURIComponent(projectName))
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                document.getElementById('left-section').innerHTML = data.left_html;
+                attachBackToProjectsEvent(companyName);  // Attach "Back to Projects" event
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching project data:', error);
+        });
+    }
+</script>

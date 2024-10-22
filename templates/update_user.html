@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Update Profile</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="{{ user_name }}" required><br><br>
+
+    <label for="password">New Password:</label>
+    <input type="password" name="password"><br><br>
+
+    <label for="profile_pic">Upload Profile Picture:</label>
+    <input type="file" name="profile_pic"><br><br>
+
+    <label for="delete_profile_pic">Delete Profile Picture:</label>
+    <input type="checkbox" name="delete_profile_pic"><br><br>
+
+    <input type="submit" value="Update">
+</form>
+{% endblock %}

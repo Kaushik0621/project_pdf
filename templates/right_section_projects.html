@@ -1,0 +1,11 @@
+<h2>Company: {{ company_name }}</h2>
+<h3>Other Projects</h3>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="#" class="project-link" data-project="{{ project }}" data-company="{{ company_name }}">{{ project }}</a>
+        <button class="edit-project" data-project="{{ project }}" data-company="{{ company_name }}">Edit</button>
+        <button class="delete-project" data-project="{{ project }}" data-company="{{ company_name }}">Delete</button>
+    </li>
+    {% endfor %}
+</ul>
