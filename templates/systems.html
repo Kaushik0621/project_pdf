@@ -5,7 +5,7 @@
         font-family: Arial, sans-serif;
         background-color: #f4f4f9;
     }
-    
+
     .form-container {
         width: 50%;
         margin: 20px auto;
@@ -14,24 +14,24 @@
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    
+
     form {
         display: flex;
         flex-direction: column;
     }
-    
+
     form label {
         margin-bottom: 10px;
         font-weight: bold;
     }
-    
+
     form input[type="text"], form input[type="number"], form select {
         margin-bottom: 15px;
         padding: 10px;
         border-radius: 5px;
         border: 1px solid #ccc;
     }
-    
+
     form input[type="submit"] {
         background-color: #007BFF;
         color: white;
@@ -47,7 +47,6 @@
 
 </style>
 
-
 <nav>
     <ul>
         <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
@@ -60,24 +59,15 @@
 
 <div id="main-container">
     <div id="left-section">
-        <h2>Vendors and their Products</h2>
-        <table>
-            <tr>
-                <th>Vendor Name</th>
-            </tr>
-            {% for vendor in vendors %}
-            <tr>
-                <td>{{ vendor[1] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-    <div id="right-section">
-        <h3>Create New Vendor</h3>
+        <h2>Create System</h2>
         <form method="POST">
-            <label for="vendor_name">Vendor Name:</label>
-            <input type="text" name="vendor_name" required>
-            <input type="submit" value="Create">
+            {% for product in products %}
+            <div>
+                <input type="checkbox" name="selected_products" value="{{ product[1] }} - {{ product[2] }} - {{ product[3] }} - {{ product[4] }}">
+                {{ product[1] }} - {{ product[2] }} - {{ product[3] }} ({{ product[4] }} per unit)
+            </div>
+            {% endfor %}
+            <input type="submit" value="Create System">
         </form>
     </div>
 </div>

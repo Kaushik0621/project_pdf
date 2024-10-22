@@ -5,7 +5,7 @@
         font-family: Arial, sans-serif;
         background-color: #f4f4f9;
     }
-    
+
     .form-container {
         width: 50%;
         margin: 20px auto;
@@ -14,24 +14,24 @@
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    
+
     form {
         display: flex;
         flex-direction: column;
     }
-    
+
     form label {
         margin-bottom: 10px;
         font-weight: bold;
     }
-    
+
     form input[type="text"], form input[type="number"], form select {
         margin-bottom: 15px;
         padding: 10px;
         border-radius: 5px;
         border: 1px solid #ccc;
     }
-    
+
     form input[type="submit"] {
         background-color: #007BFF;
         color: white;
@@ -47,7 +47,6 @@
 
 </style>
 
-
 <nav>
     <ul>
         <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
@@ -60,23 +59,33 @@
 
 <div id="main-container">
     <div id="left-section">
-        <h2>Vendors and their Products</h2>
+        <h2>Materials and Coatings</h2>
         <table>
             <tr>
-                <th>Vendor Name</th>
+                <th>Material Name</th>
+                <th>Coating Name</th>
             </tr>
-            {% for vendor in vendors %}
+            {% for material in materials %}
             <tr>
-                <td>{{ vendor[1] }}</td>
+                <td>{{ material[1] }}</td>
+                <td>{{ material[2] }}</td>
             </tr>
             {% endfor %}
         </table>
     </div>
     <div id="right-section">
-        <h3>Create New Vendor</h3>
+        <h3>Create New Material</h3>
         <form method="POST">
-            <label for="vendor_name">Vendor Name:</label>
-            <input type="text" name="vendor_name" required>
+            <label for="material_name">Material Name:</label>
+            <input type="text" name="material_name" required>
+            
+            <label for="coating_name">Coating Name:</label>
+            <select name="coating_name" required>
+                {% for coating in coatings %}
+                <option value="{{ coating[1] }}">{{ coating[1] }}</option>
+                {% endfor %}
+            </select>
+
             <input type="submit" value="Create">
         </form>
     </div>

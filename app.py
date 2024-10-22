@@ -3,12 +3,17 @@ import os
 import json
 from py_files.utils import create_user, validate_user, init_user_db
 from py_files.area_utils import calculate_area
+from py_files.vendors_routes import vendors_bp
+from py_files.vendors_db import init_db  # Assuming you have vendor-specific imports
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a secure key
 
 # Initialize the shared user database
 init_user_db()
+
+# Initialize the vendors database and tables
+init_db()
 
 @app.route('/')
 def index():
@@ -191,11 +196,8 @@ def delete_project():
         return jsonify({'success': False, 'error': 'Project not found'})
     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
 
-@app.route('/vendors')
-def vendors():
-    if 'username' in session:
-        return render_template('vendors.html')
-    return redirect(url_for('login'))
+# Register vendors blueprint (from separate routes file)
+app.register_blueprint(vendors_bp)
 
 @app.route('/logout')
 def logout():

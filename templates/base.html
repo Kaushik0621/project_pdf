@@ -25,7 +25,8 @@
             
             <li><a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a></li>
             <li><a href="{{ url_for('customers') }}" class="{% if request.endpoint == 'customers' %}active{% endif %}">Customers</a></li>
-            <li><a href="{{ url_for('vendors') }}" class="{% if request.endpoint == 'vendors' %}active{% endif %}">Vendors</a></li>
+            <li><a href="{{ url_for('vendors_bp.vendors') }}" class="{% if request.endpoint == 'vendors_bp.vendors' %}active{% endif %}">Vendors</a></li>
+
             
             {% else %}
             <li><a href="{{ url_for('login') }}">Login</a></li>

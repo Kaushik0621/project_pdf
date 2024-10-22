@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+    }
+    
+    .form-container {
+        width: 50%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    form label {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    form input[type="text"], form input[type="number"], form select {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    
+    form input[type="submit"] {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    
+</style>
+
+<nav>
+    <ul>
+        <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
+        <li><a href="{{ url_for('vendors_bp.materials') }}">Materials</a></li>
+        <li><a href="{{ url_for('vendors_bp.coatings') }}">Coating Systems</a></li>
+        <li><a href="{{ url_for('vendors_bp.products') }}">Products</a></li>
+        <li><a href="{{ url_for('vendors_bp.systems') }}">Systems</a></li>
+    </ul>
+</nav>
+<div id="main-container">
+    <div id="left-section">
+        <h2>Products List</h2>
+        <table>
+            <tr>
+                <th>Material Name</th>
+                <th>Coating Type</th>
+                <th>Vendor Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+                <td>{{ product[3] }}</td>
+                <td>{{ product[4] }}</td>
+                <td>
+                    <button class="edit-button" data-id="{{ product[0] }}">Edit</button>
+                    <button class="delete-button" data-id="{{ product[0] }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="right-section">
+        <h3>Create New Product</h3>
+        <form method="POST">
+            <label for="coating_name">Coating Type:</label>
+            <select name="coating_name" id="coating_name" required>
+                <option value="" disabled selected>Select Coating</option>
+                {% for coating in coatings %}
+                <option value="{{ coating[1] }}">{{ coating[1] }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="material_name">Material Name:</label>
+            <select name="material_name" id="material_name" required disabled>
+                <option value="" disabled selected>Select Material</option>
+            </select>
+            <br>
+            <label for="vendor_name">Vendor:</label>
+            <select name="vendor_name" id="vendor_name" required>
+                <option value="" disabled selected>Select Vendor</option>
+                {% for vendor in vendors %}
+                <option value="{{ vendor[1] }}">{{ vendor[1] }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="price">Price per unit:</label>
+            <input type="number" name="price" required>
+            <br>
+            <input type="submit" value="Add Product">
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('coating_name').addEventListener('change', function() {
+        var coatingName = this.value;
+        fetch('/get_materials_for_coating?coating_name=' + encodeURIComponent(coatingName))
+            .then(response => response.json())
+            .then(data => {
+                var materialSelect = document.getElementById('material_name');
+                materialSelect.disabled = false;
+                materialSelect.innerHTML = '<option value="" disabled selected>Select Material</option>';
+                data.materials.forEach(function(material) {
+                    var option = document.createElement('option');
+                    option.value = material;
+                    option.text = material;
+                    materialSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching materials:', error));
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('material_name').disabled = true;
+    });
+</script>
+
+{% endblock %}
