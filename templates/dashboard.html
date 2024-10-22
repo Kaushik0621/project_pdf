@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="options-container">
+    <div class="option">
+        <a href="{{ url_for('customers') }}">
+            <img src="{{ url_for('static', filename='images/customers.png') }}" alt="Customers">
+            <p>Customers</p>
+        </a>
+    </div>
+    <div class="option">
+        <a href="{{ url_for('vendors') }}">
+            <img src="{{ url_for('static', filename='images/vendor.jpg') }}" alt="Vendors">
+            <p>Vendors</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
