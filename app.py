@@ -4,16 +4,77 @@ import json
 from py_files.utils import create_user, validate_user, init_user_db
 from py_files.area_utils import calculate_area
 from py_files.vendors_routes import vendors_bp
-from py_files.vendors_db import init_db  # Assuming you have vendor-specific imports
+from py_files.vendors_db import init_db 
+import json
+import uuid
+import shutil
+import os
+
+PROJECTS_JSON = os.path.join('projects.json')
+
+def load_projects():
+    if not os.path.exists(PROJECTS_JSON):
+        with open(PROJECTS_JSON, 'w') as f:
+            json.dump({}, f, indent=4)
+        return {}
+
+    with open(PROJECTS_JSON, 'r') as f:
+        return json.load(f)
+
+
+def save_projects(projects):
+    with open(PROJECTS_JSON, 'w') as f:
+        json.dump(projects, f, indent=4)
+
+    response = {
+        'backup_save': False,
+        'error': None
+    }
+
+    try:
+        parent_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
+        backup_dir = os.path.join(parent_dir, 'cad_pdf_extractror')
+
+        if not os.path.exists(backup_dir):
+            response['error'] = "Backup directory does not exist"
+            return jsonify(response)
+
+        backup_json_path = os.path.join(backup_dir, 'projects.json')
+        with open(backup_json_path, 'w') as f:
+            json.dump(projects, f, indent=4)
+        response['backup_save'] = True
+
+    except Exception as e:
+        response['error'] = f"Backup save failed: {str(e)}"
+
+    return jsonify(response)
+
+
+
+def add_project_to_json(project_name, project_id):
+    projects = load_projects()
+    projects[project_name] = {"project_id": project_id}
+    save_projects(projects)
+
+
+def remove_project_from_json(project_name):
+    projects = load_projects()
+    
+    if project_name in projects:
+        del projects[project_name]
+        save_projects(projects)
+        return True
+    return False
+
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure key
+app.secret_key = 'your_secret_key'
 
-# Initialize the shared user database
 init_user_db()
 
-# Initialize the vendors database and tables
 init_db()
+
+project_data = load_projects()
 
 @app.route('/')
 def index():
@@ -73,7 +134,6 @@ def project_details():
         username = session['username']
         project_path = os.path.join('users', username, 'customers', company_name, project_name)
 
-        # Load documents or other data for the project
         documents = []
         if os.path.exists(project_path):
             documents = [f for f in os.listdir(project_path) if os.path.isfile(os.path.join(project_path, f))]
@@ -93,7 +153,6 @@ def edit_company():
         old_company_path = os.path.join(customers_path, old_company_name)
         new_company_path = os.path.join(customers_path, new_company_name)
 
-        # Rename the company folder if it exists
         if os.path.exists(old_company_path):
             os.rename(old_company_path, new_company_path)
             return jsonify({'success': True})
@@ -125,28 +184,29 @@ def create_project():
         project_name = data.get('project_name')
         username = session['username']
         
-        # Check if the company and project name are provided
+        load_projects()
+        
         if not company_name or not project_name:
             return jsonify({'success': False, 'error': 'Missing company or project name'}), 400
 
-        # Define the path where the company and project folders will be
         company_path = os.path.join('users', username, 'customers', company_name)
         project_path = os.path.join(company_path, project_name)
 
-        # Check if the company directory exists
         if not os.path.exists(company_path):
             return jsonify({'success': False, 'error': 'Company does not exist'}), 400
 
-        # Create the project folder if it doesn't already exist
         if not os.path.exists(project_path):
             try:
                 os.makedirs(project_path)
-                return jsonify({'success': True})  # Folder created successfully
+                project_id = str(uuid.uuid4())
+                add_project_to_json(project_name, project_id)
+                return jsonify({'success': True, 'project_id': project_id})
             except Exception as e:
-                return jsonify({'success': False, 'error': str(e)}), 500  # Handle any errors during folder creation
+                return jsonify({'success': False, 'error': str(e)}), 500
         else:
             return jsonify({'success': False, 'error': 'Project already exists'}), 400
     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+
 
 @app.route('/edit_project', methods=['POST'])
 def edit_project():
@@ -156,10 +216,8 @@ def edit_project():
         project_name = data.get('project_name')
         new_project_name = data.get('new_project_name')
         username = session['username']
-
         project_path = os.path.join('users', username, 'customers', company_name, project_name)
         new_project_path = os.path.join('users', username, 'customers', company_name, new_project_name)
-
         if os.path.exists(project_path):
             os.rename(project_path, new_project_path)
             return jsonify({'success': True})
@@ -175,7 +233,6 @@ def delete_company():
         username = session['username']
         company_path = os.path.join('users', username, 'customers', company_name)
         if os.path.exists(company_path):
-            import shutil
             shutil.rmtree(company_path)
             return jsonify({'success': True})
         return jsonify({'success': False, 'error': 'Company not found'})
@@ -191,12 +248,15 @@ def delete_project():
         project_path = os.path.join('users', username, 'customers', company_name, project_name)
         if os.path.exists(project_path):
             import shutil
-            shutil.rmtree(project_path)  # Deletes the project folder
-            return jsonify({'success': True})
-        return jsonify({'success': False, 'error': 'Project not found'})
+            shutil.rmtree(project_path)
+            if remove_project_from_json(project_name):
+                return jsonify({'success': True})
+            else:
+                return jsonify({'success': False, 'error': 'Project not found in JSON'}), 404
+        return jsonify({'success': False, 'error': 'Project not found'}), 404
     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
 
-# Register vendors blueprint (from separate routes file)
+
 app.register_blueprint(vendors_bp)
 
 @app.route('/logout')
