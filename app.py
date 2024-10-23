@@ -243,7 +243,12 @@ def cad_pdf_editor():
         
         # Send project_path to FastAPI
         fastapi_url = 'http://localhost:8888/set_project_path'
-        response = requests.post(fastapi_url, json={'project_path': project_path})
+        try:
+            response = requests.post(fastapi_url, json={'project_path': project_path})
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            print(f"Error connecting to FastAPI: {e}")
+            return jsonify({'success': False, 'message': 'Unable to connect to the PDF editor service.'}), 503
         
         if response.status_code == 200:
             # Get the UUID (pdf_id) from FastAPI's response
@@ -253,11 +258,15 @@ def cad_pdf_editor():
                 # Return the redirect URL as JSON so JavaScript can open the new tab
                 return jsonify({'success': True, 'redirect_url': fastapi_viewer_url})
             else:
-                return jsonify({'success': False, 'message': 'No PDF found in the specified project path.'}), 404
+                # No PDF found; redirect to FastAPI app's root URL
+                fastapi_upload_url = 'http://localhost:8888/'
+                # Return success: True and the redirect_url to the upload page
+                return jsonify({'success': True, 'redirect_url': fastapi_upload_url})
         else:
             return jsonify({'success': False, 'message': 'Failed to send project path to FastAPI'}), 500
 
     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+
 
 
 @app.route('/delete_company', methods=['POST'])
