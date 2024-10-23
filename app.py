@@ -10,6 +10,7 @@ import uuid
 import shutil
 import os
 import py_files.config as cf
+import requests
 
 PROJECTS_JSON = os.path.join('projects.json')
 
@@ -52,10 +53,14 @@ def save_projects(projects):
 
 
 
-def add_project_to_json(project_name, project_id):
+def add_project_to_json(project_name, project_id, project_path):
     projects = load_projects()
-    projects[project_name] = {"project_id": project_id}
+    projects[project_name] = {
+        "project_id": project_id,
+        "project_path": project_path
+    }
     save_projects(projects)
+
 
 
 def remove_project_from_json(project_name):
@@ -200,14 +205,13 @@ def create_project():
             try:
                 os.makedirs(project_path)
                 project_id = str(uuid.uuid4())
-                add_project_to_json(project_name, project_id)
+                add_project_to_json(project_name, project_id, project_path)
                 return jsonify({'success': True, 'project_id': project_id})
             except Exception as e:
                 return jsonify({'success': False, 'error': str(e)}), 500
         else:
             return jsonify({'success': False, 'error': 'Project already exists'}), 400
     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
-
 
 @app.route('/edit_project', methods=['POST'])
 def edit_project():
@@ -225,6 +229,36 @@ def edit_project():
         else:
             return jsonify({'success': False, 'error': 'Project not found'}), 400
     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+
+@app.route('/cad_pdf_editor', methods=['POST'])
+def cad_pdf_editor():
+    if 'username' in session:
+        data = request.get_json()
+        company_name = data.get('company_name')
+        project_name = data.get('project_name')
+        username = session['username']
+        project_path = os.path.join(cf.USER_PATH, username, 'customers', company_name, project_name)
+        
+        print(f"Current project path: {project_path}")
+        
+        # Send project_path to FastAPI
+        fastapi_url = 'http://localhost:8888/set_project_path'
+        response = requests.post(fastapi_url, json={'project_path': project_path})
+        
+        if response.status_code == 200:
+            # Get the UUID (pdf_id) from FastAPI's response
+            project_id = response.json().get('pdf_id')
+            if project_id:
+                fastapi_viewer_url = f"http://localhost:8888/viewer/{project_id}"
+                # Return the redirect URL as JSON so JavaScript can open the new tab
+                return jsonify({'success': True, 'redirect_url': fastapi_viewer_url})
+            else:
+                return jsonify({'success': False, 'message': 'No PDF found in the specified project path.'}), 404
+        else:
+            return jsonify({'success': False, 'message': 'Failed to send project path to FastAPI'}), 500
+
+    return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+
 
 @app.route('/delete_company', methods=['POST'])
 def delete_company():

@@ -4,6 +4,8 @@
     <center><h1>{{ company_name }}</h1>
     <h2>Project: {{ project_name }} </h2></center>
     <button onclick="window.history.back();">Back to Projects</button>
+    <button id="pdf-editor-btn" onclick="handlePdfEditor()">PDF Editor</button>
+    
     <!-- Display documents or other data -->
     {% if documents %}
     <h3>Documents</h3>
@@ -16,4 +18,41 @@
     <p>No documents available.</p>
     {% endif %}
 </div>
+
+<script>
+function handlePdfEditor() {
+    // Gather project data
+    const projectData = {
+        company_name: "{{ company_name }}",
+        project_name: "{{ project_name }}"
+    };
+
+    // Send POST request to Flask's /cad_pdf_editor route
+    fetch("/cad_pdf_editor", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(projectData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (data.redirect_url) {
+                // Open the FastAPI viewer in a new tab
+                window.open(data.redirect_url, '_blank');
+            } else {
+                alert('No PDF found in the specified project path.');
+            }
+        } else {
+            alert(data.message || 'An error occurred.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while communicating with the server.');
+    });
+}
+</script>
+    
 {% endblock %}
