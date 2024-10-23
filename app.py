@@ -9,6 +9,7 @@ import json
 import uuid
 import shutil
 import os
+import py_files.config as cf
 
 PROJECTS_JSON = os.path.join('projects.json')
 
@@ -116,7 +117,7 @@ def get_company_data():
     if 'username' in session:
         company_name = request.args.get('company_name')
         username = session['username']
-        company_path = os.path.join('users', username, 'customers', company_name)
+        company_path = os.path.join(cf.USER_PATH, username, 'customers', company_name)
 
         if os.path.exists(company_path):
             projects = [p for p in os.listdir(company_path) if p != '.DS_Store' and os.path.isdir(os.path.join(company_path, p))]
@@ -132,7 +133,7 @@ def project_details():
         company_name = request.args.get('company_name')
         project_name = request.args.get('project_name')
         username = session['username']
-        project_path = os.path.join('users', username, 'customers', company_name, project_name)
+        project_path = os.path.join(cf.USER_PATH, username, 'customers', company_name, project_name)
 
         documents = []
         if os.path.exists(project_path):
@@ -148,7 +149,7 @@ def edit_company():
         old_company_name = data.get('company_name')
         new_company_name = data.get('new_company_name')
         username = session['username']
-        customers_path = os.path.join('users', username, 'customers')
+        customers_path = os.path.join(cf.USER_PATH, username, 'customers')
 
         old_company_path = os.path.join(customers_path, old_company_name)
         new_company_path = os.path.join(customers_path, new_company_name)
@@ -163,7 +164,7 @@ def edit_company():
 def customers():
     if 'username' in session:
         username = session['username']
-        customers_path = os.path.join('users', username, 'customers')
+        customers_path = os.path.join(cf.USER_PATH, username, 'customers')
 
         companies = [c for c in os.listdir(customers_path) if c != '.DS_Store']
         if request.method == 'POST':
@@ -189,7 +190,7 @@ def create_project():
         if not company_name or not project_name:
             return jsonify({'success': False, 'error': 'Missing company or project name'}), 400
 
-        company_path = os.path.join('users', username, 'customers', company_name)
+        company_path = os.path.join(cf.USER_PATH, username, 'customers', company_name)
         project_path = os.path.join(company_path, project_name)
 
         if not os.path.exists(company_path):
@@ -216,8 +217,8 @@ def edit_project():
         project_name = data.get('project_name')
         new_project_name = data.get('new_project_name')
         username = session['username']
-        project_path = os.path.join('users', username, 'customers', company_name, project_name)
-        new_project_path = os.path.join('users', username, 'customers', company_name, new_project_name)
+        project_path = os.path.join(cf.USER_PATH, username, 'customers', company_name, project_name)
+        new_project_path = os.path.join(cf.USER_PATH, username, 'customers', company_name, new_project_name)
         if os.path.exists(project_path):
             os.rename(project_path, new_project_path)
             return jsonify({'success': True})
@@ -231,7 +232,7 @@ def delete_company():
         data = request.get_json()
         company_name = data.get('company_name')
         username = session['username']
-        company_path = os.path.join('users', username, 'customers', company_name)
+        company_path = os.path.join(cf.USER_PATH, username, 'customers', company_name)
         if os.path.exists(company_path):
             shutil.rmtree(company_path)
             return jsonify({'success': True})
@@ -245,7 +246,7 @@ def delete_project():
         company_name = data.get('company_name')
         project_name = data.get('project_name')
         username = session['username']
-        project_path = os.path.join('users', username, 'customers', company_name, project_name)
+        project_path = os.path.join(cf.USER_PATH, username, 'customers', company_name, project_name)
         if os.path.exists(project_path):
             import shutil
             shutil.rmtree(project_path)

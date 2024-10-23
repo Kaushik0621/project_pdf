@@ -1,12 +1,14 @@
 import os
 import sqlite3
+import py_files.config as cf
 
 # Path to the shared user database
-USER_DB_PATH = os.path.join('users', 'users.db')
+user_path = cf.USER_PATH
+USER_DB_PATH = os.path.join(user_path, 'users.db')
 
 def init_user_db():
-    if not os.path.exists('users'):
-        os.makedirs('users')
+    if not os.path.exists(user_path):
+        os.makedirs(user_path)
     conn = sqlite3.connect(USER_DB_PATH)
     cursor = conn.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users
@@ -28,7 +30,7 @@ def create_user(username, password):
     conn.close()
 
     # Create user folder with customers and vendors subfolders
-    user_folder = os.path.join('users', username)
+    user_folder = os.path.join(user_path, username)
     os.makedirs(os.path.join(user_folder, 'customers'))
     os.makedirs(os.path.join(user_folder, 'vendors'))
     return None
