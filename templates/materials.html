@@ -1,53 +1,103 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
+    /* Specific styles for the vendors navigation bar */
+    .vendors-nav {
+        background-color: #1f5da4; /* Entire navigation bar green */
+        padding: 5px;
+        border-radius: 5px;
+        margin-bottom: 0px; /* Adds space between nav and content */
     }
 
-    .form-container {
-        width: 50%;
-        margin: 20px auto;
+    .vendors-nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 0;
+    }
+
+    .vendors-nav ul li {
+        display: inline-block; /* Ensure each list item is treated as a block */
+        flex-grow: 1; /* Make sure each item takes equal space */
+        text-align: center; /* Center text */
+    }
+
+    .vendors-nav ul li a {
+        display: block; /* Make the link cover the full area */
+        text-decoration: none;
+        color: white; /* White text color for contrast */
+        padding: 5px 5px; /* Add padding to ensure clickable area is larger */
+        font-weight: bold;
+        border-radius: 0px;
+        background-color: 1f5da4; /* Green background for the links */
+        transition: background-color 0.3s ease;
+    }
+
+    .vendors-nav ul li a:hover {
+        background-color: #144884; /* Darker green on hover */
+    }
+
+    /* Optional: Adjust the active link style */
+    .vendors-nav ul li a.active {
+        background-color: #218838; /* Darker green for active link */
+        font-weight: bold;
+    }
+    #main-container {
+        display: flex;
+        gap: 20px;
+    }
+
+    #left-section, #right-section {
         background-color: #fff;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    form {
-        display: flex;
-        flex-direction: column;
+    #left-section {
+        flex: 2;
     }
 
-    form label {
-        margin-bottom: 10px;
-        font-weight: bold;
+    #right-section {
+        flex: 1;
     }
 
-    form input[type="text"], form input[type="number"], form select {
-        margin-bottom: 15px;
+    #right-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #right-section ul li {
         padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    form input[type="submit"] {
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
+        margin-bottom: 5px;
+        background-color: #f8f9fa;
         cursor: pointer;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
     }
 
-    form input[type="submit"]:hover {
-        background-color: #0056b3;
+    #right-section ul li:hover {
+        background-color: #e9ecef;
     }
 
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+    table th {
+        background-color: #f2f2f2;
+    }
 </style>
-
-<nav>
+<nav class="vendors-nav">
     <ul>
         <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
         <li><a href="{{ url_for('vendors_bp.materials') }}">Materials</a></li>
