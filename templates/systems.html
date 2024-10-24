@@ -3,10 +3,10 @@
 <style>
     /* Specific styles for the vendors navigation bar */
     .vendors-nav {
-        background-color: #1f5da4; /* Entire navigation bar green */
+        background-color: #1f5da4;
         padding: 5px;
         border-radius: 5px;
-        margin-bottom: 0px; /* Adds space between nav and content */
+        margin-bottom: 0px;
     }
 
     .vendors-nav ul {
@@ -18,75 +18,49 @@
     }
 
     .vendors-nav ul li {
-        display: inline-block; /* Ensure each list item is treated as a block */
-        flex-grow: 1; /* Make sure each item takes equal space */
-        text-align: center; /* Center text */
+        display: inline-block;
+        flex-grow: 1;
+        text-align: center;
     }
 
     .vendors-nav ul li a {
-        display: block; /* Make the link cover the full area */
+        display: block;
         text-decoration: none;
-        color: white; /* White text color for contrast */
-        padding: 5px 5px; /* Add padding to ensure clickable area is larger */
+        color: white;
+        padding: 5px 5px;
         font-weight: bold;
-        border-radius: 0px;
-        background-color: 1f5da4; /* Green background for the links */
+        background-color: 1f5da4;
         transition: background-color 0.3s ease;
     }
 
     .vendors-nav ul li a:hover {
-        background-color: #144884; 
+        background-color: #144884;
         border-radius: 8px;
-        transform: scale(0.95); /* Make the size slightly smaller */
-        transition: transform 0.2s ease
+        transform: scale(0.95);
+        transition: transform 0.2s ease;
     }
 
-    /* Optional: Adjust the active link style */
     .vendors-nav ul li a.active {
-        background-color: #144884; /* Darker green for active link */
+        background-color: #144884;
         font-weight: bold;
         border-radius: 8px;
     }
-    #main-container {
-        display: flex;
-        gap: 20px;
-    }
 
     #main-container {
         display: flex;
+        gap: 20px;
         height: 100vh;
         padding: 20px;
-        gap: 20px;
         box-sizing: border-box;
         height: calc(100vh - 225px);
     }
-    
-    #left-section, #right-section {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        height: 100%;
-        overflow-y: auto;
-    }
-    
-    #left-section {
-        flex: 2;
-        overflow-y: auto;
-        padding: 20px;
-    }
-    
-    #right-section {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-    }
-    
+
     #left-section, #right-section {
         background-color: #fff;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
     }
 
     #left-section {
@@ -97,6 +71,62 @@
         flex: 1;
     }
 
+    /* Form styling */
+    form {
+        background-color: #f2f2f2;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    form label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    form input[type="text"], form select {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: calc(100% - 160px);
+        box-sizing: border-box;
+        display: inline-block;
+    }
+
+    form input[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    /* Styling for layers */
+    .layer {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .layer label {
+        margin-right: 0;
+        flex: 1;
+    }
+
+    .layer select, .layer input[type="text"] {
+        flex: 2;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    /* Right Section: Company list and system management */
     #right-section ul {
         list-style-type: none;
         padding: 0;
@@ -116,162 +146,138 @@
         background-color: #e9ecef;
     }
 
-    
-input[type="text"] {
-    width: auto;
-    padding: 8px;
-    margin: 0;
-    box-sizing: border-box;
-    flex: 1;
-}
+    /* Modal styling */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
 
-input[type="submit"] {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 8px 8px;
-    cursor: pointer;
-    border-radius: 4px;
-    height: 36px;
-    line-height: 18px;
-    display: inline-block;
-}
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+    }
 
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-input[type="submit"]:hover {
-    background-color: #0056b3;
-}
+    .modal-header h2 {
+        margin: 0;
+    }
 
-/* Adjust scrolling behavior */
-#left-section, #right-section {
-    overflow-y: auto;
-}
+    .modal-header .close {
+        font-size: 24px;
+        cursor: pointer;
+    }
 
-h2{ 
-    
-    color: #007BFF;
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-h3{
-    color: #333;
-    margin-top: 0;
-    font-weight: bold;
-    font-size: 20px;
-}
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+    .hidden {
+        display: none;
+    }
 
-table th, table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-}
+    .form-container {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
 
-table th {
-    background-color: #f2f2f2;
-}
+    /* Compact form layout */
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
 
-form {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
+    .form-row label {
+        width: 30%;
+        margin-right: 10px;
+        font-weight: bold;
+    }
 
-form label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-}
+    .form-row input, .form-row select {
+        width: 65%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
 
-form input[type="text"], form input[type="submit"] {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
-    box-sizing: border-box;
-}
+    /* Layer form alignment */
+    .layer-headings {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
 
-form input[type="submit"] {
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-}
+    .layer-headings label {
+        width: 22%;
+        text-align: center;
+    }
 
-form label {
-    font-weight: bold;
-    display: inline-block; /* Make labels inline */
-    margin-bottom: 10px;
-    width: 150px; /* Set a fixed width to align with input fields */
-    vertical-align: middle; /* Align the label text vertically in the middle */
-}
+    .layer {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
 
-form input[type="text"], 
-form select {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: calc(100% - 160px); /* Adjust input width to fit beside label */
-    box-sizing: border-box;
-    display: inline-block; /* Make input fields inline */
-    vertical-align: middle; /* Align input fields vertically in the middle */
-}
-select {
-    width: 100%; /* Make the select box take full width */
-    padding: 10px; /* Add padding to make the select box taller */
-    border-radius: 5px; /* Round corners */
-    border: 1px solid #ccc; /* Border color */
-    font-size: 16px; /* Increase font size */
-    box-sizing: border-box; /* Ensure padding doesn't affect the total width */
-    margin-bottom: 10px; /* Add space below the select box */
-}
-select:hover {
-    border-color: #007BFF; /* Change border color on hover */
-}
+    .layer select, .layer input {
+        width: 22%;
+        padding: 6px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
 
-/* Optional: Add a focus effect */
-select:focus {
-    outline: none; /* Remove the default outline */
-    border-color: #28a745; /* Add a green border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
-}
+    .remove-layer {
+        width: 22%;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 6px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
 
-input[type="number"] {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: calc(100% - 160px); /* Adjust input width to fit beside label */
-    box-sizing: border-box;
-    display: inline-block; /* Make input fields inline */
-    vertical-align: middle;
-}
+    .remove-layer:hover {
+        background-color: #e53935;
+    }
 
-/* Optional: Add a hover effect for the input box */
-input[type="number"]:hover {
-    border-color: #007BFF; /* Change border color on hover */
-}
+    #save-system {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-/* Optional: Add a focus effect */
-input[type="number"]:focus {
-    outline: none; /* Remove the default outline */
-    border-color: #28a745; /* Add a green border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
-}
+    #save-system:hover {
+        background-color: #218838;
+    }
 
-form input[type="submit"]:hover {
-    background-color: #218838;
-}
-    
+    /* Align total cost text */
+    .total-cost {
+        margin-top: 20px;
+        text-align: right;
+    }
 </style>
 
 <nav class="vendors-nav">
@@ -280,22 +286,277 @@ form input[type="submit"]:hover {
         <li><a href="{{ url_for('vendors_bp.materials') }}">Materials</a></li>
         <li><a href="{{ url_for('vendors_bp.coatings') }}">Coating Systems</a></li>
         <li><a href="{{ url_for('vendors_bp.products') }}">Products</a></li>
-        <li><a href="{{ url_for('vendors_bp.systems') }}" class="active">Systems</a></li>
+        <li><a href="{{ url_for('systems_bp.systems') }}" class="active">Systems</a></li>
     </ul>
 </nav>
 
 <div id="main-container">
+    <!-- Left Section: Create New System -->
     <div id="left-section">
-        <h2>Create System</h2>
-        <form method="POST">
-            {% for product in products %}
-            <div>
-                <input type="checkbox" name="selected_products" value="{{ product[1] }} - {{ product[2] }} - {{ product[3] }} - {{ product[4] }}">
-                {{ product[1] }} - {{ product[2] }} - {{ product[3] }} ({{ product[4] }} per unit)
-            </div>
+        <h2>Create New System</h2>
+        <div class="form-container">
+            <form id="system-form">
+                <div class="form-row">
+                    <label for="company_name">Company Name:</label>
+                    <select id="company_name" name="company_name" required>
+                        <option value="" disabled selected>Select Company</option>
+                        {% for company in companies %}
+                        <option value="{{ company }}">{{ company }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label for="system_name">System Name:</label>
+                    <input type="text" id="system_name" name="system_name" required>
+                </div>
+
+                <button type="button" id="add-layer">Add Layer</button>
+
+                <div id="layers-container">
+                    <!-- Layer elements will be added here dynamically -->
+                </div>
+
+                <p class="total-cost">Total Cost: <span id="total-cost">0</span></p>
+
+                <button type="button" id="save-system">Save System</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Section: Display companies and their systems -->
+    <div id="right-section">
+        <h3>Companies</h3>
+        <ul id="companies-list">
+            {% for company in companies %}
+            <li class="company-name" data-company="{{ company }}">{{ company }}</li>
             {% endfor %}
-            <input type="submit" value="Create System">
-        </form>
+        </ul>
+
+        <!-- Systems and layers list -->
+        <div id="company-systems" class="company-systems">
+            <h3>Systems for <span id="selected-company-name"></span></h3>
+            <ul id="systems-list"></ul>
+        </div>
     </div>
 </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let totalCost = 0;
+
+    // Add layer logic
+    document.getElementById('add-layer').addEventListener('click', function() {
+        const layerDiv = document.createElement('div');
+        layerDiv.classList.add('layer');
+        layerDiv.innerHTML = `
+            <select name="coating_name" class="coating_name" required>
+                <option value="" disabled selected>Select Coating</option>
+                {% for coating in coatings %}
+                <option value="{{ coating[1] }}">{{ coating[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="material_name" class="material_name" required disabled>
+                <option value="" disabled selected>Select Material</option>
+            </select>
+
+            <select name="vendor_name" class="vendor_name" required disabled>
+                <option value="" disabled selected>Select Vendor</option>
+            </select>
+
+            <input type="text" name="price" class="price" readonly>
+            <button type="button" class="remove-layer">Remove Layer</button>
+        `;
+        document.getElementById('layers-container').appendChild(layerDiv);
+
+        // Populate material and vendor dropdowns
+        const coatingSelect = layerDiv.querySelector('.coating_name');
+        const materialSelect = layerDiv.querySelector('.material_name');
+        const vendorSelect = layerDiv.querySelector('.vendor_name');
+        const priceInput = layerDiv.querySelector('.price');
+
+        coatingSelect.addEventListener('change', function() {
+            const coatingName = this.value;
+            fetch(`/get_materials_for_coating?coating_name=${encodeURIComponent(coatingName)}`)
+                .then(response => response.json())
+                .then(data => {
+                    materialSelect.disabled = false;
+                    materialSelect.innerHTML = '<option value="" disabled selected>Select Material</option>';
+                    data.materials.forEach(function(material) {
+                        const option = document.createElement('option');
+                        option.value = material;
+                        option.text = material;
+                        materialSelect.appendChild(option);
+                    });
+                });
+        });
+
+        materialSelect.addEventListener('change', function() {
+            const materialName = this.value;
+            const coatingName = coatingSelect.value;
+            fetch(`/get_vendors_for_material_and_coating?material_name=${encodeURIComponent(materialName)}&coating_name=${encodeURIComponent(coatingName)}`)
+                .then(response => response.json())
+                .then(data => {
+                    vendorSelect.disabled = false;
+                    vendorSelect.innerHTML = '<option value="" disabled selected>Select Vendor</option>';
+                    data.vendors.forEach(function(vendor) {
+                        const option = document.createElement('option');
+                        option.value = vendor.vendor_name;
+                        option.text = `${vendor.vendor_name} - ${vendor.price}`;
+                        vendorSelect.appendChild(option);
+                    });
+                });
+        });
+
+        vendorSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const price = selectedOption.text.split(' - ')[1];
+            priceInput.value = price;
+            updateTotalCost();
+        });
+
+        layerDiv.querySelector('.remove-layer').addEventListener('click', function() {
+            layerDiv.remove();
+            updateTotalCost();
+        });
+    });
+
+    function updateTotalCost() {
+        const priceInputs = document.querySelectorAll('.price');
+        totalCost = 0;
+        priceInputs.forEach(input => {
+            if (input.value) {
+                totalCost += parseFloat(input.value);
+            }
+        });
+        document.getElementById('total-cost').innerText = totalCost.toFixed(2);
+    }
+
+    // Save system logic
+    document.getElementById('save-system').addEventListener('click', function() {
+        const systemForm = document.getElementById('system-form');
+        const layers = document.querySelectorAll('.layer');
+
+        const systemData = {
+            company_name: systemForm.company_name.value,
+            system_name: systemForm.system_name.value,
+            layers: []
+        };
+
+        layers.forEach(function(layer) {
+            const coatingName = layer.querySelector('.coating_name').value;
+            const materialName = layer.querySelector('.material_name').value;
+            const vendorName = layer.querySelector('.vendor_name').value;
+            const price = layer.querySelector('.price').value;
+
+            systemData.layers.push({ coating_name: coatingName, material_name: materialName, vendor_name: vendorName, price: price });
+        });
+
+        fetch('/add_system', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(systemData),
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('System saved successfully!');
+                resetForm();
+                loadCompanySystems(systemData.company_name);
+            } else {
+                alert('Error saving system');
+            }
+        });
+    });
+
+    function resetForm() {
+        document.getElementById('system-form').reset();
+        document.getElementById('layers-container').innerHTML = `
+            <div class="layer-headings">
+                <label>Coating Type</label>
+                <label>Material Name</label>
+                <label>Vendor Name</label>
+                <label>Price</label>
+            </div>
+        `;
+        document.getElementById('total-cost').innerText = '0';
+    }
+
+    // Handle company click to load systems
+    document.querySelectorAll('.company-name').forEach(companyElement => {
+        companyElement.addEventListener('click', function() {
+            const companyName = this.getAttribute('data-company');
+            document.getElementById('selected-company-name').innerText = companyName;
+            loadCompanySystems(companyName);
+        });
+    });
+
+    // Load systems for a specific company
+    function loadCompanySystems(companyName) {
+        fetch(`/get_systems_for_company?company_name=${encodeURIComponent(companyName)}`)
+            .then(response => response.json())
+            .then(data => {
+                const systemList = document.getElementById('systems-list');
+                systemList.innerHTML = '';
+
+                console.log('Systems fetched:', data.systems);  // Debugging line to log fetched systems
+
+                if (data.systems.length > 0) {
+                    data.systems.forEach(function(system) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <strong>${system.system_name}</strong><br>
+                            Total Cost: ${system.total_price}<br>
+                            <strong>Layers:</strong><br>
+                            <ul class="system-layers">
+                                ${system.layers.map(layer => `
+                                    <li>
+                                        Coating: ${layer.coating_name}, Material: ${layer.material_name}, Vendor: ${layer.vendor_name}, Price: ${layer.price}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            <button class="delete-system" data-id="${system.id}">Delete</button>
+                        `;
+                        systemList.appendChild(li);
+
+                        // Delete handler
+                        li.querySelector('.delete-system').addEventListener('click', function() {
+                            deleteSystem(system.id, companyName);
+                        });
+                    });
+                } else {
+                    systemList.innerHTML = '<li>No systems available for this company.</li>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching systems:', error);
+            });
+    }
+
+    // Delete system logic
+    function deleteSystem(systemId, companyName) {
+        if (confirm("Are you sure you want to delete this system?")) {
+            fetch(`/delete_system`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: systemId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadCompanySystems(companyName);
+                    alert('System deleted successfully.');
+                } else {
+                    alert('Error deleting system.');
+                }
+            });
+        }
+    }
+});
+</script>
 {% endblock %}

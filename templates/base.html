@@ -26,14 +26,14 @@
             <li><a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a></li>
             <li><a href="{{ url_for('customers') }}" class="{% if request.endpoint in [ 'customers', 'project_details'] %}active{% endif %}">Quotes</a></li>
             <li><a href="{{ url_for('vendors_bp.vendors') }}" 
-                   class="{% if request.endpoint in ['vendors_bp.vendors', 'vendors_bp.materials', 'vendors_bp.coatings', 'vendors_bp.products', 'vendors_bp.systems'] %}active{% endif %}">
+                   class="{% if request.endpoint in ['vendors_bp.vendors', 'vendors_bp.materials', 'vendors_bp.coatings', 'vendors_bp.products', 'systems_bp.systems'] %}active{% endif %}">
                 Admin
             </a></li>
 
             
             {% else %}
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            <li><a href="{{ url_for('login') }}" class="{% if request.endpoint == 'login' %}active{% endif %}">Login</a></li>
+            <li><a href="{{ url_for('signup') }}" class="{% if request.endpoint == 'signup' %}active{% endif %}">Sign Up</a></li>
             {% endif %}
         </ul>
     </nav>

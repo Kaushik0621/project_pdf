@@ -67,9 +67,9 @@ def products():
     vendors = get_vendors()
     return render_template('products.html', products=products, materials=materials, coatings=coatings, vendors=vendors)
 
-@vendors_bp.route('/systems', methods=['GET', 'POST'])
-def systems():
-    return render_template('systems.html')
+# @vendors_bp.route('/systems', methods=['GET', 'POST'])
+# def systems():
+#     return render_template('systems.html')
 
 @vendors_bp.route('/get_coating_for_material')
 def get_coating_for_material_route():

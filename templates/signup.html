@@ -1,16 +1,110 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Sign Up</h2>
-{% if error %}
-<p class="error">{{ error }}</p>
-{% endif %}
-<form method="post">
-    <label>Username:</label>
-    <input type="text" name="username" required>
-    <br>
-    <label>Password:</label>
-    <input type="password" name="password" required>
-    <br>
-    <input type="submit" value="Sign Up">
-</form>
+
+<style>
+    /* General page styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Container for signup form */
+    .signup-container {
+        max-width: 400px;
+        margin: 100px auto;
+        background-color: #fff;
+        padding: 30px 20px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    /* Form group style */
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    /* Input fields styling */
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        outline: none;
+    }
+
+    /* Error message styling */
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    /* Submit button styling */
+    .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background-color: #218838;
+        transform: scale(1.02);
+    }
+
+    /* Style for label */
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    /* Add some spacing to the h2 */
+    h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: normal;
+        color: #333;
+    }
+</style>
+
+<div class="signup-container">
+    <h2>Sign Up</h2>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Sign Up" class="submit-btn">
+        </div>
+    </form>
+</div>
+
 {% endblock %}

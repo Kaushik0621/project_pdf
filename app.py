@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session, j
 import os
 import json
 from py_files.utils import create_user, validate_user, init_user_db
+from py_files.systems_db import init_systems_db
 from py_files.area_utils import calculate_area
 from py_files.vendors_routes import vendors_bp
 from py_files.vendors_db import init_db 
@@ -12,6 +13,7 @@ import os
 import py_files.config as cf
 from flask import send_from_directory, abort
 import requests
+from py_files.systems_routes import systems_bp
 
 PROJECTS_JSON = os.path.join('projects.json')
 
@@ -78,7 +80,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 init_user_db()
-
+init_systems_db()
 init_db()
 
 project_data = load_projects()
@@ -345,6 +347,7 @@ def delete_project():
 
 
 app.register_blueprint(vendors_bp)
+app.register_blueprint(systems_bp)
 
 @app.route('/logout')
 def logout():
