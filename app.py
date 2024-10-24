@@ -10,6 +10,7 @@ import uuid
 import shutil
 import os
 import py_files.config as cf
+from flask import send_from_directory, abort
 import requests
 
 PROJECTS_JSON = os.path.join('projects.json')
@@ -140,12 +141,54 @@ def project_details():
         username = session['username']
         project_path = os.path.join(cf.USER_PATH, username, 'customers', company_name, project_name)
 
-        documents = []
-        if os.path.exists(project_path):
-            documents = [f for f in os.listdir(project_path) if os.path.isfile(os.path.join(project_path, f))]
+        # Load the JSON file (update the filename if necessary)
+        json_file_path = os.path.join(project_path, 'extracted_data.json')  # Update to the correct filename
+        project_json = {}
+        if os.path.exists(json_file_path):
+            with open(json_file_path, 'r') as json_file:
+                project_json = json.load(json_file)
 
-        return render_template('project_details.html', company_name=company_name, project_name=project_name, documents=documents)
+        # Get the PDF file
+        pdf_name = None
+        for file_name in os.listdir(project_path):
+            if file_name.endswith('.pdf'):
+                pdf_name = file_name
+                break
+
+        # Set the current page (default to page 1)
+        current_page = int(request.args.get('page', 1))
+
+        # Print JSON to debug
+        print(f"Loaded JSON: {project_json}")
+
+        return render_template('project_details.html', company_name=company_name, 
+                               project_name=project_name, project_json=project_json, 
+                               pdf_name=pdf_name, current_page=current_page)
     return redirect(url_for('login'))
+
+
+
+
+
+@app.route('/static/uploads/<path:filename>')
+def serve_pdf(filename):
+    company_name = request.args.get('company_name')
+    project_name = request.args.get('project_name')
+    username = session.get('username')  # Get username from session
+
+    if not company_name or not project_name or not username:
+        abort(400, description="Missing company name, project name, or username")
+
+    project_path = os.path.join(cf.USER_PATH, username, 'customers', company_name, project_name)
+
+    if not os.path.exists(project_path):
+        abort(404, description="Project path not found")
+
+    return send_from_directory(project_path, filename)
+
+
+
+
 
 @app.route('/edit_company', methods=['POST'])
 def edit_company():

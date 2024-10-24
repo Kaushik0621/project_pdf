@@ -3,31 +3,71 @@
 <div id="project-details">
     <center><h1>{{ company_name }}</h1>
     <h2>Project: {{ project_name }} </h2></center>
+
+    <!-- Buttons for navigation -->
     <button onclick="window.history.back();">Back to Projects</button>
     <button id="pdf-editor-btn" onclick="handlePdfEditor()">PDF Editor</button>
-    
-    <!-- Display documents or other data -->
-    {% if documents %}
+
+    <!-- Line Items Table -->
+    <div id="json-line-items" style="width: 80%; margin: auto; text-align: left;">
+        <h3>Line Items</h3>
+        {% if project_json and project_json.input %}
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Page</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Line Item</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Length</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Width</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Height</th>
+
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Note</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for page, items in project_json.input.items() %}
+                        {% for item in items %}
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">{{ page }}</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">{{ item.line_item }}</td>
+                            {% if item.metadata and item.metadata.lengthField and item.metadata.breadthField and item.metadata.heightField %}
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{ item.metadata.lengthField }}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{ item.metadata.breadthField }}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{ item.metadata.heightField }}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{ item.metadata.paintCostField }}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">{{ item.metadata.noteField }}</td>
+                                
+                            {% else %}
+                                <td colspan="3" style="border: 1px solid #ddd; padding: 8px;">Metadata not available for this item</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No line items available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Documents Section -->
     <h3>Documents</h3>
     <ul>
         {% for doc in documents %}
         <li>{{ doc }}</li>
         {% endfor %}
     </ul>
-    {% else %}
-    <p>No documents available.</p>
-    {% endif %}
+
 </div>
 
 <script>
 function handlePdfEditor() {
-    // Gather project data
     const projectData = {
         company_name: "{{ company_name }}",
         project_name: "{{ project_name }}"
     };
 
-    // Send POST request to Flask's /cad_pdf_editor route
     fetch("/cad_pdf_editor", {
         method: "POST",
         headers: {
@@ -39,7 +79,6 @@ function handlePdfEditor() {
     .then(data => {
         if (data.success) {
             if (data.redirect_url) {
-                // Open the FastAPI viewer in a new tab
                 window.open(data.redirect_url, '_blank');
             } else {
                 alert('No PDF found in the specified project path.');
@@ -54,5 +93,5 @@ function handlePdfEditor() {
     });
 }
 </script>
-    
+
 {% endblock %}

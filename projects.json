@@ -34,5 +34,25 @@
     "ABC1": {
         "project_id": "1295cf06-a381-4a7c-a3e2-8aa71665dd1d",
         "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/ABC/ABC1"
+    },
+    "TotalA1": {
+        "project_id": "6b9d83dd-e184-4b4a-9bae-a19659a6206b",
+        "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/Total/TotalA1"
+    },
+    " AMC 1": {
+        "project_id": "b5e9b5cd-65e3-4cfb-9b57-6c8d2b641bb7",
+        "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/AMC/ AMC 1"
+    },
+    "AMC 2": {
+        "project_id": "1d402871-229f-4f6d-871f-69fd67c9f39b",
+        "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/AMC/AMC 2"
+    },
+    "AMC 3": {
+        "project_id": "24d91a2a-ad46-4a39-afee-6bbafee3362a",
+        "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/AMC/AMC 3"
+    },
+    "Total A2": {
+        "project_id": "5ede5ef7-63dc-44b9-bf02-e88518febd2d",
+        "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/Total/Total A2"
     }
 }
