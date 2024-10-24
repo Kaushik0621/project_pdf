@@ -30,5 +30,9 @@
     "Abc - 001": {
         "project_id": "5e21b812-37fb-4105-9d06-87bf3ad00add",
         "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/ABC/Abc - 001"
+    },
+    "ABC1": {
+        "project_id": "1295cf06-a381-4a7c-a3e2-8aa71665dd1d",
+        "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/ABC/ABC1"
     }
 }

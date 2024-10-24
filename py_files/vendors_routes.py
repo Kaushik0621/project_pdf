@@ -104,6 +104,31 @@ def get_materials_for_coating():
     
     return jsonify({'materials': [material[0] for material in materials]})
 
+@vendors_bp.route('/get_products_for_coating')
+def get_products_for_coating():
+    coating_name = request.args.get('coating_name')
+    
+    # Connect to the database and fetch products related to the given coating
+    conn = sqlite3.connect(admin_db_path)
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT material_name, vendor_name, price
+        FROM products
+        WHERE coating_name = ?
+    ''', (coating_name,))
+    
+    products = cursor.fetchall()
+    conn.close()
+
+    if products:
+        return jsonify({
+            'success': True,
+            'products': [{'material_name': p[0], 'vendor_name': p[1], 'price': p[2]} for p in products]
+        })
+    else:
+        return jsonify({'success': False, 'error': 'No products found for this coating.'})
+
+
 @vendors_bp.route('/edit_product', methods=['POST'])
 def edit_product():
     data = request.get_json()
@@ -131,3 +156,26 @@ def delete_product():
     conn.close()
     
     return jsonify({'success': True})
+@vendors_bp.route('/get_products_for_material')
+def get_products_for_material():
+    material_name = request.args.get('material_name')
+    
+    # Connect to the database and fetch products related to the given material
+    conn = sqlite3.connect(admin_db_path)
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT material_name, coating_name, vendor_name, price
+        FROM products
+        WHERE material_name = ?
+    ''', (material_name,))
+    
+    products = cursor.fetchall()
+    conn.close()
+
+    if products:
+        return jsonify({
+            'success': True,
+            'products': [{'material_name': p[0], 'coating_name': p[1], 'vendor_name': p[2], 'price': p[3]} for p in products]
+        })
+    else:
+        return jsonify({'success': False, 'error': 'No products found for this material.'})

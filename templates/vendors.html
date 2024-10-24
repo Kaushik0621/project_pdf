@@ -1,12 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
-    /* Specific styles for the vendors navigation bar */
+    #main-container {
+        display: flex;
+        height: 100vh;
+        padding: 20px;
+        gap: 20px;
+        box-sizing: border-box;
+        height: calc(100vh - 225px);
+    }
+
+    #left-section, #right-section {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    #left-section {
+        flex: 2;
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    #right-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        position: relative; /* Enable positioning */
+    }
+
     .vendors-nav {
-        background-color: #1f5da4; /* Entire navigation bar green */
+        background-color: #1f5da4;
         padding: 5px;
         border-radius: 5px;
-        margin-bottom: 0px; /* Adds space between nav and content */
+        margin-bottom: 0px;
     }
 
     .vendors-nav ul {
@@ -18,54 +48,86 @@
     }
 
     .vendors-nav ul li {
-        display: inline-block; /* Ensure each list item is treated as a block */
-        flex-grow: 1; /* Make sure each item takes equal space */
-        text-align: center; /* Center text */
+        display: inline-block;
+        flex-grow: 1;
+        text-align: center;
     }
 
     .vendors-nav ul li a {
-        display: block; /* Make the link cover the full area */
+        display: block;
         text-decoration: none;
-        color: white; /* White text color for contrast */
-        padding: 5px 5px; /* Add padding to ensure clickable area is larger */
+        color: white;
+        padding: 5px 5px;
         font-weight: bold;
         border-radius: 0px;
-        background-color: 1f5da4; /* Green background for the links */
+        background-color: 1f5da4;
         transition: background-color 0.3s ease;
     }
 
     .vendors-nav ul li a:hover {
-        background-color: #144884; /* Darker green on hover */
-    }
-
-    /* Optional: Adjust the active link style */
-    .vendors-nav ul li a.active {
-        background-color: #218838; /* Darker green for active link */
-        font-weight: bold;
-    }
-    #main-container {
-        display: flex;
-        gap: 20px;
-    }
-
-    #left-section, #right-section {
-        background-color: #fff;
-        padding: 20px;
+        background-color: #144884;
         border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transform: scale(0.95);
+        transition: transform 0.2s ease;
     }
 
-    #left-section {
-        flex: 2;
+    .vendors-nav ul li a.active {
+        background-color: #144884;
+        font-weight: bold;
+        border-radius: 8px;
     }
 
-    #right-section {
-        flex: 1;
+    #right-section form {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #f2f2f2; /* Keep original background */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Original shadow */
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    form label {
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 10px;
+        width: 150px;
+        vertical-align: middle;
+    }
+
+    form input[type="text"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: calc(100% - 160px);
+        box-sizing: border-box;
+        vertical-align: middle;
+    }
+
+    form input[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 12px 24px;  /* Adjust padding to make button larger */
+        border: none;
+        border-radius: 5px;
+        box-sizing: border-box;
+        width: 100%; /* Ensure button spans the full width */
+        text-align: center;
+    }
+    
+    form input[type="submit"]:hover {
+        background-color: #218838;
     }
 
     #right-section ul {
         list-style-type: none;
         padding: 0;
+        overflow-y: auto;
+        flex-grow: 1;
+        margin-top: 5px; 
     }
 
     #right-section ul li {
@@ -82,25 +144,40 @@
         background-color: #e9ecef;
     }
 
+    h2 {
+        color: #007BFF;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    h3 {
+        color: #333;
+        margin-top: 0;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
+        margin-top: 20px;
     }
 
     table th, table td {
         border: 1px solid #ccc;
-        padding: 10px;
-        text-align: left;
+        padding: 8px;
+        text-align: center;
     }
 
     table th {
         background-color: #f2f2f2;
     }
+
 </style>
 
 <nav class="vendors-nav">
     <ul>
-        <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
+        <li><a href="{{ url_for('vendors_bp.vendors') }}" class="active">Vendors</a></li>
         <li><a href="{{ url_for('vendors_bp.materials') }}">Materials</a></li>
         <li><a href="{{ url_for('vendors_bp.coatings') }}">Coating Systems</a></li>
         <li><a href="{{ url_for('vendors_bp.products') }}">Products</a></li>
@@ -111,11 +188,12 @@
 <div id="main-container">
     <!-- Left Section: Display products for a selected company -->
     <div id="left-section">
-        <h2>Products of Selected Company</h2>
+
+        <h2 id="company-title">Products of <span id="company-name">Company Name</span></h2>
         <table id="company-products">
             <thead>
                 <tr>
-                    <th>Product Name</th>
+                    <th>Material Name</th>
                     <th>Coating Type</th>
                     <th>Price Per Unit</th>
                 </tr>
@@ -123,6 +201,9 @@
             <tbody>
                 <!-- Product rows will be dynamically inserted here -->
             </tbody>
+            <tr>
+                <td colspan="3">Please select a material from the right to view products.</td>
+            </tr>
         </table>
     </div>
 
@@ -153,6 +234,11 @@
         companyListItems.forEach(function (item) {
             item.addEventListener('click', function () {
                 const companyName = this.getAttribute('data-vendor');
+                
+                // Update the company name in the title
+                document.getElementById('company-name').textContent = companyName;
+
+                // Fetch and display products for the selected company
                 fetchCompanyProducts(companyName);
             });
         });

@@ -1,3 +1,206 @@
+<html><script>
+    /* Updated CSS for better design */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+#main-container {
+    display: flex;
+    height: 100vh;
+    padding: 20px;
+    gap: 20px;
+    box-sizing: border-box;
+    height: calc(100vh - 185px);
+}
+
+#left-section, #right-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    overflow-y: auto;
+}
+
+#left-section {
+    flex: 2;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+#right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#new-company-form, #company-list {
+    margin-bottom: 20px;
+}
+
+#company-list ul, #company-projects ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#company-list li, #company-projects li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.company-link, .project-link {
+    text-decoration: none;
+    color: #007BFF;
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+.company-link:hover, .project-link:hover {
+    text-decoration: none;
+    color: #0056b3;
+    text-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+}
+
+.edit-button, .edit-project {
+    background-color: #007BFF;
+    color: white;
+}
+
+.delete-button, .delete-project {
+    background-color: #dc3545;
+    color: white;
+}
+
+.edit-button:hover, .edit-project:hover {
+    background-color: #0056b3;
+}
+
+.delete-button:hover, .delete-project:hover {
+    background-color: #c82333;
+}
+
+input[type="text"] {
+    width: auto;
+    padding: 8px;
+    margin: 0;
+    box-sizing: border-box;
+    flex: 1;
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 8px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 36px;
+    line-height: 18px;
+    display: inline-block;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Adjust scrolling behavior */
+#left-section, #right-section {
+    overflow-y: auto;
+}
+
+h2{ 
+    
+    color: #007BFF;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+h3{
+    color: #333;
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+form input[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 12px 24px;  /* Adjust padding to make button larger */
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%; /* Ensure button spans the full width */
+    text-align: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+form {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+form input[type="text"], form input[type="submit"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form input[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+
+</script>
+<body>
 <div id="company-projects">
     
     <ul id="projects-list">
@@ -19,4 +222,4 @@
             <input type="submit" value="Create Project">
         </form>
     </div>
-</div>
+</div></body></html>

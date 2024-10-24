@@ -71,7 +71,7 @@ nav li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 0;
+    padding: 12px 0;
     text-decoration: none;
 }
 
@@ -79,11 +79,15 @@ nav li a.active {  /* Active link style */
     background-color: #144884;  /* Highlight color for the active page */
     color: white;  /* Text color for the active page */
     font-weight: bold;  /* Bold font for active link */
+    border-radius: 8px;
 }
 
 nav li a:hover {
     background-color: #144884;
     color: white;
+    border-radius: 8px;
+    transform: scale(0.95); /* Make the size slightly smaller */
+    transition: transform 0.2s ease
 }
 
 
