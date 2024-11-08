@@ -54,5 +54,9 @@
     "Total A2": {
         "project_id": "5ede5ef7-63dc-44b9-bf02-e88518febd2d",
         "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/Total/Total A2"
+    },
+    "test": {
+        "project_id": "b3a64cf0-3805-49ad-b021-f3952dc79282",
+        "project_path": "/Users/kaushikdas/WORK/ljf/user_data/users/demo/customers/XYZ/test"
     }
 }

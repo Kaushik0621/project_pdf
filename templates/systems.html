@@ -317,7 +317,7 @@
                     <!-- Layer elements will be added here dynamically -->
                 </div>
 
-                <p class="total-cost">Total Cost: <span id="total-cost">0</span></p>
+                <p class="total-cost">Total Cost Per Unit: <span id="total-cost">0</span></p>
 
                 <button type="button" id="save-system">Save System</button>
             </form>
@@ -340,7 +340,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -474,14 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function resetForm() {
         document.getElementById('system-form').reset();
-        document.getElementById('layers-container').innerHTML = `
-            <div class="layer-headings">
-                <label>Coating Type</label>
-                <label>Material Name</label>
-                <label>Vendor Name</label>
-                <label>Price</label>
-            </div>
-        `;
+        document.getElementById('layers-container').innerHTML = '';
         document.getElementById('total-cost').innerText = '0';
     }
 
@@ -502,14 +494,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const systemList = document.getElementById('systems-list');
                 systemList.innerHTML = '';
 
-                console.log('Systems fetched:', data.systems);  // Debugging line to log fetched systems
-
                 if (data.systems.length > 0) {
                     data.systems.forEach(function(system) {
                         const li = document.createElement('li');
                         li.innerHTML = `
                             <strong>${system.system_name}</strong><br>
-                            Total Cost: ${system.total_price}<br>
+                            Total Cost Per Unit: ${system.total_price}<br>
                             <strong>Layers:</strong><br>
                             <ul class="system-layers">
                                 ${system.layers.map(layer => `
@@ -535,6 +525,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error fetching systems:', error);
             });
     }
+
+       
 
     // Delete system logic
     function deleteSystem(systemId, companyName) {
