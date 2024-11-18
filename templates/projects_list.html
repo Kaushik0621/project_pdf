@@ -204,7 +204,9 @@ form input[type="submit"]:hover {
 <div id="company-projects">
     
     <ul id="projects-list">
+        <h3>Quotes</h3>
         {% for project in projects %}
+        
         <li>
             <a href="#" class="project-link" data-project="{{ project }}" data-company="{{ company_name }}">{{ project }}</a>
             <div>
@@ -216,10 +218,10 @@ form input[type="submit"]:hover {
 
     <!-- New Project Form -->
     <div id="new-project-form" style="margin-top: 20px;">
-        <h3>Create New Project</h3>
+        
         <form>
-            <input type="text" id="project_name" name="project_name" placeholder="Project Name" required>
-            <input type="submit" value="Create Project">
+            <input type="text" id="project_name" name="project_name" placeholder="Create new quote" required>
+            <input type="submit" value="Create">
         </form>
     </div>
 </div></body></html>

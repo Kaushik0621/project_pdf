@@ -208,7 +208,7 @@ form input[type="submit"]:hover {
 <div id="main-container">
     <!-- Left Section -->
     <div id="left-section">
-        <h2 id="company-name">Select a company</h2>
+        <h2 id="company-name">Select a client</h2>
         <div id="company-projects">
             <!-- Projects will be loaded here -->
         </div>
@@ -218,16 +218,18 @@ form input[type="submit"]:hover {
     <div id="right-section">
         <!-- New Company Form -->
         <div id="new-company-form">
-            <h3>Create New Company</h3>
+            <h2>Clients</h2>
             <form method="post">
-                <label>Company Name:</label>
-                <input type="text" name="company_name" required>
+                
+                
+                <input type="text" name="company_name" placeholder="Create new client" required>
+
                 <input type="submit" value="Create">
             </form>
         </div>
         <!-- Company List -->
         <div id="company-list">
-            <h2>Companies</h2>
+           
             <ul>
                 {% for company in companies %}
                 <li>

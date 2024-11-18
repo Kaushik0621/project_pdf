@@ -237,7 +237,7 @@ form input[type="submit"]:hover {
     <ul>
         <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
         <li><a href="{{ url_for('vendors_bp.materials') }}" class = "active">Materials</a></li>
-        <li><a href="{{ url_for('vendors_bp.coatings') }}">Coating Systems</a></li>
+        <li><a href="{{ url_for('vendors_bp.coatings') }}">Coatings</a></li>
         <li><a href="{{ url_for('vendors_bp.products') }}">Products</a></li>
         <li><a href="{{ url_for('systems_bp.systems') }}">Systems</a></li>
     </ul>
@@ -246,7 +246,7 @@ form input[type="submit"]:hover {
 <div id="main-container">
     <!-- Left Section: Display products for the selected material -->
     <div id="left-section">
-        <h2 id="material-title">Products for <span id="selected-material">Selected Material</span></h2>
+        <h2 id="material-title"> <span id="selected-material">Please select a material</span></h2>
         <table id="material-products">
             <thead>
                 <tr>
@@ -257,16 +257,14 @@ form input[type="submit"]:hover {
             </thead>
             <tbody>
                 <!-- Product rows will be dynamically inserted here -->
-                <tr>
-                    <td colspan="3">Please select a material from the right to view products.</td>
-                </tr>
+               
             </tbody>
         </table>
     </div>
 
     <!-- Right Section: Display all materials and create new material -->
     <div id="right-section">
-        <h3>Create New Material</h3>
+        <h2>Materials</h2>
         <form method="POST">
             <label for="material_name">Material Name:</label>
             <input type="text" name="material_name" required>
@@ -281,7 +279,7 @@ form input[type="submit"]:hover {
             <input type="submit" value="Create">
         </form>
 
-        <h3>All Materials</h3>
+        
         <ul id="material-list">
             {% for material in materials %}
             <li class="material-item" data-material="{{ material[1] }}">{{ material[1] }}</li>

@@ -237,7 +237,7 @@ form input[type="submit"]:hover {
     <ul>
         <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
         <li><a href="{{ url_for('vendors_bp.materials') }}">Materials</a></li>
-        <li><a href="{{ url_for('vendors_bp.coatings') }}" class="active">Coating Systems</a></li>
+        <li><a href="{{ url_for('vendors_bp.coatings') }}" class="active">Coatings</a></li>
         <li><a href="{{ url_for('vendors_bp.products') }}">Products</a></li>
         <li><a href="{{ url_for('systems_bp.systems') }}">Systems</a></li>
     </ul>
@@ -246,7 +246,7 @@ form input[type="submit"]:hover {
 <div id="main-container">
     <!-- Left Section: Display products for the selected coating -->
     <div id="left-section">
-        <h2 id="coating-title">Products for <span id="selected-coating">Selected Coating</span></h2>
+        <h2 id="coating-title"><span id="selected-coating">Please select a coating</span></h2>
         <table id="coating-products">
             <thead>
                 <tr>
@@ -256,23 +256,21 @@ form input[type="submit"]:hover {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td colspan="4">Please select a coating from the right to view products.</td>
-                </tr>
+               
             </tbody>
         </table>
     </div>
 
     <!-- Right Section: Display all coatings and the Create Coating form -->
     <div id="right-section">
-        <h3>Create New Coating</h3>
+        <h2>Coatings</h2>
         <form method="POST">
             <label for="coating_name">Coating Name:</label>
             <input type="text" name="coating_name" required>
             <input type="submit" value="Create">
         </form>
 
-        <h3>All Coatings</h3>
+        
         <ul id="coating-list">
             {% for coating in coatings %}
             <li class="coating-item" data-coating="{{ coating[1] }}">{{ coating[1] }}</li>

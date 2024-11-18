@@ -8,7 +8,12 @@
         border-radius: 5px;
         margin-bottom: 0px;
     }
-
+    h2{ 
+    
+        color: #007BFF;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
     .vendors-nav ul {
         list-style-type: none;
         margin: 0;
@@ -284,7 +289,7 @@
     <ul>
         <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
         <li><a href="{{ url_for('vendors_bp.materials') }}">Materials</a></li>
-        <li><a href="{{ url_for('vendors_bp.coatings') }}">Coating Systems</a></li>
+        <li><a href="{{ url_for('vendors_bp.coatings') }}">Coatings</a></li>
         <li><a href="{{ url_for('vendors_bp.products') }}">Products</a></li>
         <li><a href="{{ url_for('systems_bp.systems') }}" class="active">Systems</a></li>
     </ul>
@@ -297,7 +302,7 @@
         <div class="form-container">
             <form id="system-form">
                 <div class="form-row">
-                    <label for="company_name">Company Name:</label>
+                    <label for="company_name">Client Name:</label>
                     <select id="company_name" name="company_name" required>
                         <option value="" disabled selected>Select Company</option>
                         {% for company in companies %}
@@ -326,7 +331,7 @@
 
     <!-- Right Section: Display companies and their systems -->
     <div id="right-section">
-        <h3>Companies</h3>
+        <h2>Client List</h2>
         <ul id="companies-list">
             {% for company in companies %}
             <li class="company-name" data-company="{{ company }}">{{ company }}</li>

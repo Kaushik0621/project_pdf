@@ -278,7 +278,7 @@ form input[type="submit"]:hover {
     <ul>
         <li><a href="{{ url_for('vendors_bp.vendors') }}">Vendors</a></li>
         <li><a href="{{ url_for('vendors_bp.materials') }}">Materials</a></li>
-        <li><a href="{{ url_for('vendors_bp.coatings') }}">Coating Systems</a></li>
+        <li><a href="{{ url_for('vendors_bp.coatings') }}">Coatings</a></li>
         <li><a href="{{ url_for('vendors_bp.products') }}" class = "active">Products</a></li>
         <li><a href="{{ url_for('systems_bp.systems') }}">Systems</a></li>
     </ul>
@@ -310,7 +310,7 @@ form input[type="submit"]:hover {
         
     </div>
     <div id="right-section">
-        <h3>Create New Product</h3>
+        <h2>Create New Product</h2>
         <form method="POST">
             <label for="coating_name">Coating Type:</label>
             <select name="coating_name" id="coating_name" required>
